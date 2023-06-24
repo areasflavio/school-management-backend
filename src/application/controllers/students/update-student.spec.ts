@@ -70,10 +70,29 @@ describe('Update Student Controller', () => {
     });
   });
 
+  test('should return 400 if UpdateStudent throws an Error instance', async () => {
+    const { sut, updateStudent } = makeSut();
+    vi.spyOn(updateStudent, 'execute').mockImplementationOnce(async () => {
+      return await Promise.reject(new Error('Error message.'));
+    });
+    const httpRequest = {
+      params: {
+        id: 'id',
+      },
+      body: {
+        nome: 'nome',
+        email: 'email@example.com',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new Error('Error message.'));
+  });
+
   test('should return 500 if UpdateStudent throws', async () => {
     const { sut, updateStudent } = makeSut();
     vi.spyOn(updateStudent, 'execute').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error(''));
+      return await Promise.reject();
     });
     const httpRequest = {
       params: {

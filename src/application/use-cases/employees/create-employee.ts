@@ -22,6 +22,12 @@ export class DbCreateEmployee implements CreateEmployee {
     status,
     vinculo,
   }: CreateEmployeeData): Promise<void> {
+    const isEmailAlreadyRegistered = await this.employeeRepository.getByEmail(
+      email
+    );
+    if (isEmailAlreadyRegistered) {
+      throw new Error('This email is already registered.');
+    }
     await this.employeeRepository.create({
       email,
       nome,

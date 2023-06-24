@@ -60,6 +60,17 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     return employee;
   }
 
+  async getByEmail(email: string): Promise<Employee | null> {
+    const prismaEmployee = await prisma.employee.findFirst({
+      where: { email },
+    });
+    if (!prismaEmployee) {
+      return null;
+    }
+    const employee = prismaAdapterEmployee(prismaEmployee);
+    return employee;
+  }
+
   async update(id: string, data: UpdateEmployeeData): Promise<void> {
     const {
       email,

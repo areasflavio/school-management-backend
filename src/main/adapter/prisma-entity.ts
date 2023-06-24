@@ -1,6 +1,8 @@
+import { Account } from '@domain/entities/account';
 import { Employee } from '@domain/entities/employee';
 import { Student } from '@domain/entities/student';
 import {
+  Account as PrismaAccount,
   Employee as PrismaEmployee,
   Student as PrismaStudent,
 } from '@prisma/client';
@@ -85,4 +87,16 @@ export const prismaAdapterEmployee = (
     id
   );
   return employee;
+};
+
+export const prismaAdapterAccount = (prismaAccount: PrismaAccount): Account => {
+  const { email, id, password } = prismaAccount;
+  const account = Account.create(
+    {
+      email,
+      password,
+    },
+    id
+  );
+  return account;
 };

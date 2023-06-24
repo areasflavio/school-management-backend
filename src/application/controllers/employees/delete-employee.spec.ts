@@ -56,10 +56,25 @@ describe('Update Employee Controller', () => {
     expect(deleteEmployeeSpy).toHaveBeenCalledWith('id');
   });
 
+  test('should return 400 if DeleteEmployee throws an Error instance', async () => {
+    const { sut, deleteEmployee } = makeSut();
+    vi.spyOn(deleteEmployee, 'execute').mockImplementationOnce(async () => {
+      return await Promise.reject(new Error('Error message.'));
+    });
+    const httpRequest = {
+      params: {
+        id: 'id',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new Error('Error message.'));
+  });
+
   test('should return 500 if DeleteEmployee throws', async () => {
     const { sut, deleteEmployee } = makeSut();
     vi.spyOn(deleteEmployee, 'execute').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error(''));
+      return await Promise.reject();
     });
     const httpRequest = {
       params: {

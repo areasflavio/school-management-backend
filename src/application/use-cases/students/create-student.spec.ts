@@ -43,6 +43,13 @@ describe('Create student use case', () => {
     );
   });
 
+  it('should throw if a provided email is already registered', async () => {
+    const { sut } = makeSut();
+    await sut.execute(makeHttpStudentBody());
+    const promise = sut.execute(makeHttpStudentBody());
+    expect(promise).rejects.toThrow();
+  });
+
   it('should create a new student on success', async () => {
     const { studentRepository, sut } = makeSut();
     await sut.execute(makeHttpStudentBody());

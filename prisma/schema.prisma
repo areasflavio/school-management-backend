@@ -47,7 +47,7 @@ model Student {
   nome             String
   status           Status
   serie            String
-  email            String
+  email            String   @unique
   RG               String?
   CPF              String?
   nascimento       DateTime
@@ -64,7 +64,7 @@ model Employee {
   id           String     @id @default(uuid())
   registro     Int        @default(autoincrement())
   nome         String
-  email        String
+  email        String     @unique
   status       Status
   vinculo      Relation
   admissao     DateTime
@@ -75,4 +75,10 @@ model Employee {
   sexo         Gender
   escolaridade Scholarity
   endereco     String
+}
+
+model Account {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
 }

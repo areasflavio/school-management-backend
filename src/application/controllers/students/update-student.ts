@@ -17,6 +17,9 @@ export class UpdateStudentController implements Controller {
       await this.updateStudent.execute(id, data);
       return ok();
     } catch (err) {
+      if (err instanceof Error) {
+        return badRequest(err);
+      }
       return serverError();
     }
   }

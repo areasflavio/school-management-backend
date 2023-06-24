@@ -16,6 +16,9 @@ export class DeleteStudentController implements Controller {
       await this.deleteStudent.execute(id);
       return ok();
     } catch (err) {
+      if (err instanceof Error) {
+        return badRequest(err);
+      }
       return serverError();
     }
   }

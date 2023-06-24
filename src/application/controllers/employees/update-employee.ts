@@ -17,6 +17,9 @@ export class UpdateEmployeeController implements Controller {
       await this.updateEmployee.execute(id, data);
       return ok();
     } catch (err) {
+      if (err instanceof Error) {
+        return badRequest(err);
+      }
       return serverError();
     }
   }

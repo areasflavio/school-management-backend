@@ -16,6 +16,9 @@ export class DeleteEmployeeController implements Controller {
       await this.deleteEmployee.execute(id);
       return ok();
     } catch (err) {
+      if (err instanceof Error) {
+        return badRequest(err);
+      }
       return serverError();
     }
   }

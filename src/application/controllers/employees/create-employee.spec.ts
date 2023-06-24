@@ -207,10 +207,23 @@ describe('Create Employee Controller', () => {
     expect(createEmployeeSpy).toHaveBeenCalledWith(makeHttpEmployeeBody());
   });
 
+  test('should return 400 if CreateEmployee throws an Error instance', async () => {
+    const { sut, createEmployee } = makeSut();
+    vi.spyOn(createEmployee, 'execute').mockImplementationOnce(async () => {
+      return await Promise.reject(new Error('Error message.'));
+    });
+    const httpRequest = {
+      body: makeHttpEmployeeBody(),
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new Error('Error message.'));
+  });
+
   test('should return 500 if CreateEmployee throws', async () => {
     const { sut, createEmployee } = makeSut();
     vi.spyOn(createEmployee, 'execute').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error(''));
+      return await Promise.reject();
     });
     const httpRequest = {
       body: makeHttpEmployeeBody(),

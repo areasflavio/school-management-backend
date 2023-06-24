@@ -24,6 +24,12 @@ export class DbCreateStudent implements CreateStudent {
     telefoneMae,
     telefonePai,
   }: CreateStudentData): Promise<void> {
+    const isEmailAlreadyRegistered = await this.studentRepository.getByEmail(
+      email
+    );
+    if (isEmailAlreadyRegistered) {
+      throw new Error('This email is already registered.');
+    }
     await this.studentRepository.create({
       email,
       nome,

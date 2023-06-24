@@ -27,6 +27,12 @@ export class InMemoryStudentRepository implements StudentRepository {
     return this.students.find((student) => student.id === id) ?? null;
   }
 
+  async getByEmail(email: string): Promise<Student | null> {
+    return (
+      this.students.find((student) => student.props.email === email) ?? null
+    );
+  }
+
   async update(id: string, data: UpdateStudentData): Promise<void> {
     this.students.forEach((student) => {
       if (student.id === id) {

@@ -12,6 +12,10 @@ export interface GetStudentById {
   execute: (id: string) => Promise<Student | null>;
 }
 
+export interface GetStudentByEmail {
+  execute: (email: string) => Promise<Student | null>;
+}
+
 export interface UpdateStudent {
   execute: (id: string, data: Partial<IStudent>) => Promise<void>;
 }

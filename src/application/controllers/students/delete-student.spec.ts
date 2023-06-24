@@ -56,10 +56,25 @@ describe('Update Student Controller', () => {
     expect(deleteStudentSpy).toHaveBeenCalledWith('id');
   });
 
+  test('should return 400 if DeleteStudent throws an instance', async () => {
+    const { sut, deleteStudent } = makeSut();
+    vi.spyOn(deleteStudent, 'execute').mockImplementationOnce(async () => {
+      return await Promise.reject(new Error('Error message.'));
+    });
+    const httpRequest = {
+      params: {
+        id: 'id',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new Error('Error message.'));
+  });
+
   test('should return 500 if DeleteStudent throws', async () => {
     const { sut, deleteStudent } = makeSut();
     vi.spyOn(deleteStudent, 'execute').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error(''));
+      return await Promise.reject();
     });
     const httpRequest = {
       params: {

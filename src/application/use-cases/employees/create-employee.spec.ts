@@ -41,6 +41,13 @@ describe('Create employee use case', () => {
     );
   });
 
+  it('should throw if a provided email is already registered', async () => {
+    const { sut } = makeSut();
+    await sut.execute(makeHttpEmployeeBody());
+    const promise = sut.execute(makeHttpEmployeeBody());
+    expect(promise).rejects.toThrow();
+  });
+
   it('should create a new employee on success', async () => {
     const { employeeRepository, sut } = makeSut();
     await sut.execute(makeHttpEmployeeBody());

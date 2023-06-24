@@ -65,6 +65,9 @@ export class CreateEmployeeController implements Controller {
       });
       return created();
     } catch (err) {
+      if (err instanceof Error) {
+        return badRequest(err);
+      }
       return serverError();
     }
   }

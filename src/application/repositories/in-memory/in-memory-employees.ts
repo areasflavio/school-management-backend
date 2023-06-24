@@ -27,6 +27,12 @@ export class InMemoryEmployeeRepository implements EmployeeRepository {
     return this.employees.find((employee) => employee.id === id) ?? null;
   }
 
+  async getByEmail(email: string): Promise<Employee | null> {
+    return (
+      this.employees.find((employee) => employee.props.email === email) ?? null
+    );
+  }
+
   async update(id: string, data: UpdateEmployeeData): Promise<void> {
     this.employees.forEach((employee) => {
       if (employee.id === id) {

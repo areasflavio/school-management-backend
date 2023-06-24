@@ -171,10 +171,23 @@ describe('Create Student Controller', () => {
     expect(createStudentSpy).toHaveBeenCalledWith(makeHttpStudentBody());
   });
 
+  test('should return 400 if CreateStudent throws an Error instance', async () => {
+    const { sut, createStudent } = makeSut();
+    vi.spyOn(createStudent, 'execute').mockImplementationOnce(async () => {
+      return await Promise.reject(new Error('Error message.'));
+    });
+    const httpRequest = {
+      body: makeHttpStudentBody(),
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new Error('Error message.'));
+  });
+
   test('should return 500 if CreateStudent throws', async () => {
     const { sut, createStudent } = makeSut();
     vi.spyOn(createStudent, 'execute').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error(''));
+      return await Promise.reject();
     });
     const httpRequest = {
       body: makeHttpStudentBody(),

@@ -15,22 +15,61 @@ const makeSut = () => {
 const makeStudents = async (studentRepository: InMemoryStudentRepository) => {
   studentRepository.create(
     {
-      email: 'student1@example.com',
-      nome: 'student1',
+      matricula: 123,
+      nome: 'nome1',
+      status: 'ATIVO',
+      serie: 'serie',
+      email: 'email1@example.com',
+      nascimento: new Date('2000-01-01'),
+      sexo: 'MASCULINO',
+      endereco: 'endereco',
+      emailResponsavel: 'emailResponsavel@example.com',
+      CPF: null,
+      RG: null,
+      nomeMae: null,
+      nomePai: null,
+      telefoneMae: null,
+      telefonePai: null,
     },
     'id1'
   );
   studentRepository.create(
     {
-      email: 'student2@example.com',
-      nome: 'student2',
+      matricula: 123,
+      nome: 'nome2',
+      status: 'ATIVO',
+      serie: 'serie',
+      email: 'email2@example.com',
+      nascimento: new Date('2000-01-01'),
+      sexo: 'MASCULINO',
+      endereco: 'endereco',
+      emailResponsavel: 'emailResponsavel@example.com',
+      CPF: null,
+      RG: null,
+      nomeMae: null,
+      nomePai: null,
+      telefoneMae: null,
+      telefonePai: null,
     },
     'id2'
   );
   studentRepository.create(
     {
-      email: 'student3@example.com',
-      nome: 'student3',
+      matricula: 123,
+      nome: 'nome3',
+      status: 'ATIVO',
+      serie: 'serie',
+      email: 'email3@example.com',
+      nascimento: new Date('2000-01-01'),
+      sexo: 'MASCULINO',
+      endereco: 'endereco',
+      emailResponsavel: 'emailResponsavel@example.com',
+      CPF: null,
+      RG: null,
+      nomeMae: null,
+      nomePai: null,
+      telefoneMae: null,
+      telefonePai: null,
     },
     'id3'
   );
@@ -58,8 +97,21 @@ describe('Get student by id use case', () => {
     expect(result).toEqual(
       expect.objectContaining({
         props: {
-          nome: 'student1',
-          email: 'student1@example.com',
+          matricula: 123,
+          nome: 'nome1',
+          status: 'ATIVO',
+          serie: 'serie',
+          email: 'email1@example.com',
+          nascimento: new Date('2000-01-01'),
+          sexo: 'MASCULINO',
+          endereco: 'endereco',
+          emailResponsavel: 'emailResponsavel@example.com',
+          CPF: null,
+          RG: null,
+          nomeMae: null,
+          nomePai: null,
+          telefoneMae: null,
+          telefonePai: null,
         },
       })
     );

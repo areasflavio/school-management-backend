@@ -58,6 +58,14 @@ describe('Students Routes', () => {
         .expect(400);
     });
 
+    test('should return 400 on failure for existing email', async () => {
+      await request(app).post('/api/alunos').send(makeStudentRouteBody());
+      await request(app)
+        .post('/api/alunos')
+        .send(makeStudentRouteBody())
+        .expect(400);
+    });
+
     test('should return 201 on success', async () => {
       await request(app)
         .post('/api/alunos')
