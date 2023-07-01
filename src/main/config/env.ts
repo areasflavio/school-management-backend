@@ -1,3 +1,4 @@
 export default {
-  port: process.env.PORT || 3333,
+  port: process.env.PORT ?? 3333,
+  secret: process.env.JWT_SECRET ?? 'secret',
 };

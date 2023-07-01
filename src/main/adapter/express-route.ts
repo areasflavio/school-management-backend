@@ -7,6 +7,7 @@ export const expressAdapterRoute = (controller: Controller) => {
     const httpRequest: HttpRequest = {
       body: req.body,
       params: req.params,
+      accessToken: req.accessToken,
     };
     const httpResponse = await controller.handle(httpRequest);
     res.status(httpResponse.statusCode).json(httpResponse.body);

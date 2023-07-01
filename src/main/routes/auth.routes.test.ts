@@ -61,4 +61,28 @@ describe('Accounts Routes', () => {
         .expect(201);
     });
   });
+
+  describe('POST /sign-in', () => {
+    test('should return 400 on failure', async () => {
+      await request(app)
+        .post('/api/sign-in')
+        .send(makeAccountRouteBody('email'))
+        .expect(400);
+    });
+
+    test('should return 400 on failure for a non existing email', async () => {
+      await request(app)
+        .post('/api/sign-in')
+        .send(makeAccountRouteBody('passwordConfirmation'))
+        .expect(400);
+    });
+
+    test('should return 200 on success', async () => {
+      await request(app).post('/api/sign-up').send(makeAccountRouteBody());
+      await request(app)
+        .post('/api/sign-in')
+        .send(makeAccountRouteBody('passwordConfirmation'))
+        .expect(200);
+    });
+  });
 });
