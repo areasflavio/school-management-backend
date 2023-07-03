@@ -7,7 +7,7 @@ export const ensureAuthenticated = (
   next: NextFunction
 ): void => {
   if (!req?.headers || !req.headers?.authorization) {
-    res.statusCode = 401;
+    res.statusCode = 403;
     res.json({
       error: 'Access Denied: Missing JWT token from the "Authorization" header',
     });

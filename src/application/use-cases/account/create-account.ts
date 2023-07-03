@@ -11,7 +11,7 @@ export class DbCreateAccount implements CreateAccount {
     private accountRepository: AccountRepository
   ) {}
 
-  async execute({ email, password }: CreateAccountData): Promise<void> {
+  async execute({ email, password, role }: CreateAccountData): Promise<void> {
     const isEmailAlreadyRegistered = await this.accountRepository.getByEmail(
       email
     );
@@ -22,6 +22,7 @@ export class DbCreateAccount implements CreateAccount {
     await this.accountRepository.create({
       email,
       password: hashedPassword,
+      role,
     });
   }
 }

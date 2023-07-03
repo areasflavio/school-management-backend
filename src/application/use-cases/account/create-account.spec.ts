@@ -11,6 +11,9 @@ import { DbCreateAccount } from './create-account';
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
+    async compare(value: string, hash: string): Promise<boolean> {
+      return await Promise.resolve(true);
+    }
     async encrypt(value: string): Promise<string> {
       return await Promise.resolve('hashedPassword');
     }
@@ -39,6 +42,7 @@ const makeHttpAccountBody = (): CreateAccountData => {
   return {
     email: 'email@example.com',
     password: 'password',
+    role: 'USER',
   };
 };
 
@@ -72,6 +76,7 @@ describe('Create account use case', () => {
         props: {
           email: 'email@example.com',
           password: 'hashedPassword',
+          role: 'USER',
         },
       })
     );

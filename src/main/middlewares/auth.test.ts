@@ -13,7 +13,7 @@ describe('Auth Middleware', () => {
         mockResponse.send(mockRequest.body);
       }
     );
-    await request(app).post('/test_auth_middleware').send().expect(401);
+    await request(app).post('/test_auth_middleware').send().expect(403);
   });
 
   test('should not be authenticated if no token is provided', async () => {
@@ -28,7 +28,7 @@ describe('Auth Middleware', () => {
       .post('/test_auth_middleware')
       .set('authorization', '')
       .send()
-      .expect(401);
+      .expect(403);
   });
 
   test('should be authenticated if a valid token is provided', async () => {

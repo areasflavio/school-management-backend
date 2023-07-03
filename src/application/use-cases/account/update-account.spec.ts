@@ -17,6 +17,7 @@ const makeAccounts = async (accountRepository: InMemoryAccountRepository) => {
     {
       email: 'account1@example.com',
       password: 'password',
+      role: 'USER',
     },
     'id1'
   );
@@ -53,13 +54,14 @@ describe('Update account use case', () => {
           props: {
             email: 'account1@example.com',
             password: 'password',
+            role: 'USER',
           },
         }),
       ])
     );
   });
 
-  it('should update a account on success', async () => {
+  it('should update a account password on success', async () => {
     const { accountRepository, sut } = makeSut();
     await makeAccounts(accountRepository);
     await sut.execute('id1', {
@@ -71,6 +73,26 @@ describe('Update account use case', () => {
           props: {
             email: 'account1@example.com',
             password: 'new-password',
+            role: 'USER',
+          },
+        }),
+      ])
+    );
+  });
+
+  it('should update a account role on success', async () => {
+    const { accountRepository, sut } = makeSut();
+    await makeAccounts(accountRepository);
+    await sut.execute('id1', {
+      role: 'ADMIN',
+    });
+    expect(accountRepository.accounts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          props: {
+            email: 'account1@example.com',
+            password: 'password',
+            role: 'ADMIN',
           },
         }),
       ])

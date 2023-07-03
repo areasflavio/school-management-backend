@@ -3,6 +3,7 @@ import { Entity } from '@core/domain/entity';
 export interface IAccount {
   email: string;
   password: string;
+  role: 'ADMIN' | 'USER';
 }
 
 export class Account extends Entity<IAccount> {

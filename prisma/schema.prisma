@@ -41,6 +41,11 @@ enum Scholarity {
   DOUTORADO
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model Student {
   id               String   @id @default(uuid())
   matricula        Int      @default(autoincrement())
@@ -78,7 +83,8 @@ model Employee {
 }
 
 model Account {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   password String
+  role     UserRole @default(USER)
 }

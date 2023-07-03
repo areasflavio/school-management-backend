@@ -17,6 +17,7 @@ const makeAccounts = async (accountRepository: InMemoryAccountRepository) => {
     {
       email: 'account1@example.com',
       password: 'password',
+      role: 'USER',
     },
     'id1'
   );
@@ -46,6 +47,7 @@ describe('Get account by email use case', () => {
         props: {
           email: 'account1@example.com',
           password: 'password',
+          role: 'USER',
         },
       })
     );

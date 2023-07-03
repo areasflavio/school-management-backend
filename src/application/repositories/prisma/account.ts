@@ -47,11 +47,18 @@ export class PrismaAccountRepository implements AccountRepository {
   }
 
   async update(id: string, data: UpdateAccountData): Promise<void> {
-    const { password } = data;
+    const { password, role } = data;
+    const account = await prisma.account.findUnique({
+      where: { id },
+    });
+    if (!account) {
+      return;
+    }
     await prisma.account.update({
       where: { id },
       data: {
         password,
+        role: role ?? account.role,
       },
     });
   }

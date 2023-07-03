@@ -6,6 +6,16 @@
 - Database: PostgreSQL
 - Testes: Vitest
 
+## Features
+
+- [x] CRUD completo para alunos
+- [x] CRUD completo para funcionários
+- [x] Autenticação com JWT
+- [x] Rotas protegidas
+- [ ] Controle de acesso
+- [ ] Rate Limiter
+- [ ] Cobertura de testes
+
 ## Frontend
 
 [Figma](https://www.figma.com/file/kTLssDnNd3bfVetOcLuadz/Project-COM222?type=design&node-id=0-1&t=ZqsHUjzJ6ePt8mLe-0)

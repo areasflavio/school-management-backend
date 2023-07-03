@@ -30,15 +30,15 @@ const makeSut = (): SutTypes => {
 };
 
 describe('AuthMiddleware', () => {
-  test('should return 401 if no access token is provided', async () => {
+  test('should return 403 if no access token is provided', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle({
       accessToken: undefined,
     });
-    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.statusCode).toBe(403);
   });
 
-  test('should return 401 if access token is invalid', async () => {
+  test('should return 403 if access token is invalid', async () => {
     const { sut, tokenizerStub } = makeSut();
     vi.spyOn(tokenizerStub, 'verify').mockReturnValueOnce(
       Promise.resolve(undefined)
@@ -46,7 +46,7 @@ describe('AuthMiddleware', () => {
     const httpResponse = await sut.handle({
       accessToken: 'token',
     });
-    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.statusCode).toBe(403);
   });
 
   test('should call Tokenizer with correct data', async () => {

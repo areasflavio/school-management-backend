@@ -2,7 +2,7 @@ import { Account, IAccount } from '@domain/entities/account';
 
 export type CreateAccountData = IAccount;
 
-export type UpdateAccountData = Partial<Pick<IAccount, 'password'>>;
+export type UpdateAccountData = Partial<Pick<IAccount, 'password' | 'role'>>;
 
 export interface AccountRepository {
   create(data: CreateAccountData): Promise<void>;
