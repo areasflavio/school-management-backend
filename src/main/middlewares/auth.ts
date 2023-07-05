@@ -18,7 +18,7 @@ export const ensureAuthenticated = (
 
   req.accessToken = token;
 
-  makeEnsureAuthenticate();
+  makeEnsureAuthenticate().handle(req);
 
   next();
 };

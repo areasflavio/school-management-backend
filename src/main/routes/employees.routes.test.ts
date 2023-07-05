@@ -1,7 +1,9 @@
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, test } from 'vitest';
 
+import { JWTTokenizerAdapter } from '@main/adapter/jwt-tokenizer';
 import app from '@main/config/app';
+import env from '@main/config/env';
 import prisma from '@main/config/prisma';
 
 const makeEmployeeRouteBody = (ignoredAttr?: string) => {
@@ -35,8 +37,29 @@ const makeEmployeeRouteBody = (ignoredAttr?: string) => {
 };
 
 describe('Employees Routes', () => {
+  let userToken = '';
+  let adminToken = '';
+
   beforeAll(async () => {
     await prisma.$connect();
+    const userAccount = prisma.account.create({
+      data: {
+        email: 'user@example.com',
+        password: 'password',
+        role: 'USER',
+      },
+    });
+    const adminAccount = prisma.account.create({
+      data: {
+        email: 'admin@example.com',
+        password: 'password',
+        role: 'ADMIN',
+      },
+    });
+    const account = await prisma.$transaction([userAccount, adminAccount]);
+    const tokenizer = new JWTTokenizerAdapter(env.secret, 1000 * 60 * 60 * 24);
+    userToken = await tokenizer.sign(account[0].id);
+    adminToken = await tokenizer.sign(account[1].id);
   });
 
   beforeEach(async () => {
@@ -44,6 +67,7 @@ describe('Employees Routes', () => {
   });
 
   afterAll(async () => {
+    await prisma.account.deleteMany();
     await prisma.employee.deleteMany();
     await prisma.$disconnect();
   });
@@ -53,7 +77,7 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody('email'))
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
@@ -61,11 +85,11 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token');
+        .set('authorization', `Bearer ${adminToken}`);
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
@@ -73,7 +97,7 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(201);
     });
   });
@@ -82,7 +106,7 @@ describe('Employees Routes', () => {
     test('should return 200 on success', async () => {
       await request(app)
         .get('/api/funcionarios')
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${userToken}`)
         .expect(200);
     });
   });
@@ -92,11 +116,11 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token');
+        .set('authorization', `Bearer ${adminToken}`);
       const employee = await prisma.employee.findFirst();
       await request(app)
-        .put('/api/funcionarios/' + employee?.id)
-        .set('authorization', 'Bearer token')
+        .get('/api/funcionarios/' + employee?.id)
+        .set('authorization', `Bearer ${userToken}`)
         .expect(200);
     });
   });
@@ -109,7 +133,7 @@ describe('Employees Routes', () => {
           nome: 'nome',
           email: 'email@example.com',
         })
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
@@ -117,7 +141,7 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token');
+        .set('authorization', `Bearer ${adminToken}`);
       const employee = await prisma.employee.findFirst();
       await request(app)
         .put('/api/funcionarios/' + employee?.id)
@@ -125,7 +149,7 @@ describe('Employees Routes', () => {
           nome: 'nome',
           email: 'email@example.com',
         })
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(200);
     });
   });
@@ -134,7 +158,7 @@ describe('Employees Routes', () => {
     test('should return 400 on failure', async () => {
       await request(app)
         .delete('/api/funcionarios/' + 'id')
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
@@ -142,12 +166,12 @@ describe('Employees Routes', () => {
       await request(app)
         .post('/api/funcionarios')
         .send(makeEmployeeRouteBody())
-        .set('authorization', 'Bearer token');
+        .set('authorization', `Bearer ${adminToken}`);
       const employee = await prisma.employee.findFirst();
       await request(app)
         .delete('/api/funcionarios/' + employee?.id)
         .send()
-        .set('authorization', 'Bearer token')
+        .set('authorization', `Bearer ${adminToken}`)
         .expect(200);
     });
   });

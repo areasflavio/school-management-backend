@@ -90,11 +90,12 @@ export const prismaAdapterEmployee = (
 };
 
 export const prismaAdapterAccount = (prismaAccount: PrismaAccount): Account => {
-  const { email, id, password } = prismaAccount;
+  const { email, id, password, role } = prismaAccount;
   const account = Account.create(
     {
       email,
       password,
+      role,
     },
     id
   );

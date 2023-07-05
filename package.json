@@ -9,9 +9,9 @@
     "build": "tsup src",
     "migrate:dev": "npx prisma migrate dev",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy",
-    "test": "vitest --passWithNoTests",
-    "test:unit": "vitest --passWithNoTests --config ./vitest-unit.config.ts",
-    "test:e2e": "dotenv -e .env.test -- npx prisma migrate deploy;dotenv -e .env.test -- vitest --config ./vitest-e2e.config.ts --watch false",
+    "test": "vitest --passWithNoTests --no-threads",
+    "test:unit": "vitest --passWithNoTests --no-threads --config ./vitest-unit.config.ts",
+    "test:e2e": "dotenv -e .env.test -- npx prisma migrate deploy;dotenv -e .env.test -- vitest --no-threads --config ./vitest-e2e.config.ts --watch false",
     "test:coverage": "npm run test:e2e -- --coverage",
     "prepare": "husky install"
   },

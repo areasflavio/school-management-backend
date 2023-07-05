@@ -23,7 +23,7 @@ export class RoleMiddleware implements Middleware {
       const id = await this.tokenizer.verify(accessToken!);
       if (id) {
         const account = await this.accountRepository.getById(id);
-        if (account) {
+        if (account?.id) {
           const { role } = account.props;
           if (this.roles.includes(role)) return ok();
         }
