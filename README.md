@@ -12,11 +12,13 @@
 - [x] CRUD completo para funcionários
 - [x] Autenticação com JWT
 - [x] Rotas protegidas
-- [ ] Controle de acesso
-- [ ] Rate Limiter
+- [x] Controle de acesso
+- [ ] Documentação
 - [ ] Cobertura de testes
 
 ## Frontend
+
+[Repositório](https://github.com/paulojr-eco/COM222-Frontend)
 
 [Figma](https://www.figma.com/file/kTLssDnNd3bfVetOcLuadz/Project-COM222?type=design&node-id=0-1&t=ZqsHUjzJ6ePt8mLe-0)
 
@@ -27,36 +29,59 @@
 
 ## Rotas
 
-### Mensagem de boas-vindas
+## Autenticação
+
+### Sign up
 
 ```http
-  GET /
+  POST /api/sign-up
 ```
 
+| Body                   | Type     | Description                    |
+| :--------------------- | :------- | :----------------------------- |
+| `email`                | `string` | **Required**. Email do usuário |
+| `password`             | `string` | **Required**. Senha do usuário |
+| `passwordConfirmation` | `string` | **Required**. Senha do usuário |
+
+### Sign in
+
+```http
+  POST /api/sign-in
+```
+
+| Body       | Type     | Description                    |
+| :--------- | :------- | :----------------------------- |
+| `email`    | `string` | **Required**. Email do usuário |
+| `password` | `string` | **Required**. Senha do usuário |
+
 <br/>
+
+> As rotas abaixo são autenticadas
 
 ## Alunos
 
 ### Listas todos os alunos
 
 ```http
-  GET /alunos
+  GET /api/alunos
 ```
 
 ### Detalhes de um aluno
 
 ```http
-  GET /alunos/:id
+  GET /api/alunos/:id
 ```
 
 | Parameter | Type     | Description               |
 | :-------- | :------- | :------------------------ |
 | `id`      | `string` | **Required**. Id do aluno |
 
+> As rotas permitidas somente para admin
+
 ### Criar um aluno
 
 ```http
-  POST /alunos
+  POST /api/alunos
 ```
 
 | Body               | Type             | Description                                    |
@@ -80,7 +105,7 @@
 ### Editar um aluno
 
 ```http
-  PUT /alunos/:id
+  PUT /api/alunos/:id
 ```
 
 | Parameter | Type     | Description               |
@@ -108,7 +133,7 @@
 ### Deletar um aluno
 
 ```http
-  DELETE /alunos/:id
+  DELETE /api/alunos/:id
 ```
 
 | Parameter | Type     | Description               |
@@ -134,6 +159,8 @@
 | Parameter | Type     | Description                     |
 | :-------- | :------- | :------------------------------ |
 | `id`      | `string` | **Required**. Id do funcionário |
+
+> As rotas permitidas somente para admin
 
 ### Criar um funcionário
 
@@ -192,60 +219,5 @@
 | Parameter | Type     | Description                     |
 | :-------- | :------- | :------------------------------ |
 | `id`      | `string` | **Required**. Id do funcionário |
-
-<br/>
-
-> As rotas abaixo são autenticadas
-
-### Listas todos os usuários
-
-```http
-  GET /users
-```
-
-### Detalhes de um usuário
-
-```http
-  GET /users/:id
-```
-
-| Parameter | Type     | Description                 |
-| :-------- | :------- | :-------------------------- |
-| `id`      | `string` | **Required**. Id do usuário |
-
-### Criar um usuário
-
-```http
-  POST /users
-```
-
-| Body    | Type     | Description                    |
-| :------ | :------- | :----------------------------- |
-| `email` | `string` | **Required**. Email do usuário |
-| `senha` | `string` | **Required**. Senha do usuário |
-
-### Editar um usuário
-
-```http
-  PUT /users/:id
-```
-
-| Parameter | Type     | Description                 |
-| :-------- | :------- | :-------------------------- |
-| `id`      | `string` | **Required**. Id do usuário |
-
-| Body    | Type     | Description      |
-| :------ | :------- | :--------------- |
-| `senha` | `string` | Senha do usuário |
-
-### Deletar um usuário
-
-```http
-  DELETE /users/:id
-```
-
-| Parameter | Type     | Description                 |
-| :-------- | :------- | :-------------------------- |
-| `id`      | `string` | **Required**. Id do usuário |
 
 <br/>
