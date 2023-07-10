@@ -23,6 +23,7 @@ export class DbCreateStudent implements CreateStudent {
     status,
     telefoneMae,
     telefonePai,
+    avatar,
   }: CreateStudentData): Promise<void> {
     const isEmailAlreadyRegistered = await this.studentRepository.getByEmail(
       email
@@ -46,6 +47,7 @@ export class DbCreateStudent implements CreateStudent {
       status,
       telefoneMae,
       telefonePai,
+      avatar,
     });
   }
 }

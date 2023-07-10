@@ -63,6 +63,7 @@ model Student {
   telefonePai      String?
   nomeMae          String?
   telefoneMae      String?
+  avatar           String?
 }
 
 model Employee {
@@ -80,6 +81,7 @@ model Employee {
   sexo         Gender
   escolaridade Scholarity
   endereco     String
+  avatar       String?
 }
 
 model Account {

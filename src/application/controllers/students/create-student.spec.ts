@@ -53,6 +53,7 @@ const makeHttpStudentBody = (ignoredAttr?: keyof CreateStudentData) => {
     nomePai: null,
     telefoneMae: null,
     telefonePai: null,
+    avatar: null,
   };
 
   const filteredKeys = Object.keys(fakeStudent).filter(

@@ -1,4 +1,4 @@
-import request from 'supertest';
+import path from 'path';
 import { afterAll, beforeAll, beforeEach, describe, test } from 'vitest';
 
 import { JWTTokenizerAdapter } from '@main/adapter/jwt-tokenizer';
@@ -6,41 +6,12 @@ import app from '@main/config/app';
 import env from '@main/config/env';
 import prisma from '@main/config/prisma';
 
-const makeStudentRouteBody = (ignoredAttr?: string) => {
-  const fakeStudent: any = {
-    matricula: 123,
-    nome: 'nome',
-    status: 'ATIVO',
-    serie: 'serie',
-    email: 'email@example.com',
-    nascimento: new Date('2000-01-01'),
-    sexo: 'MASCULINO',
-    endereco: 'endereco',
-    emailResponsavel: 'emailResponsavel@example.com',
-    CPF: null,
-    RG: null,
-    nomeMae: null,
-    nomePai: null,
-    telefoneMae: null,
-    telefonePai: null,
-  };
+const filePath = path.resolve(__dirname, '..', '..', '__tests__');
 
-  const filteredKeys = Object.keys(fakeStudent).filter(
-    (key) => !ignoredAttr || key !== ignoredAttr
-  );
-
-  return Object.assign(
-    {},
-    filteredKeys.reduce((acc: any, key) => {
-      acc[key] = fakeStudent[key];
-      return acc;
-    }, {})
-  );
-};
-
-describe('Students Routes', () => {
+describe('Students Routes', async () => {
   let userToken = '';
   let adminToken = '';
+  let requestApp = (await import('supertest')).default(app);
 
   beforeAll(async () => {
     await prisma.$connect();
@@ -66,6 +37,7 @@ describe('Students Routes', () => {
 
   beforeEach(async () => {
     await prisma.student.deleteMany();
+    requestApp = (await import('supertest')).default(app);
   });
 
   afterAll(async () => {
@@ -76,29 +48,55 @@ describe('Students Routes', () => {
 
   describe('POST /alunos', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody('email'))
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 400 on failure for existing email', async () => {
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody())
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .field('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody())
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .field('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 201 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody())
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`)
         .expect(201);
     });
@@ -106,7 +104,7 @@ describe('Students Routes', () => {
 
   describe('GET /alunos', () => {
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .get('/api/alunos')
         .set('authorization', `Bearer ${userToken}`)
         .expect(200);
@@ -115,12 +113,21 @@ describe('Students Routes', () => {
 
   describe('GET /alunos/:id', () => {
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody())
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
       const student = await prisma.student.findFirst();
-      await request(app)
+      await requestApp
         .get('/api/alunos/' + student?.id)
         .set('authorization', `Bearer ${userToken}`)
         .expect(200);
@@ -129,28 +136,32 @@ describe('Students Routes', () => {
 
   describe('PUT /alunos/:id', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .put('/api/alunos/' + 'id')
-        .send({
-          nome: 'nome',
-          email: 'email@example.com',
-        })
+        .field('nome', 'nome')
+        .field('email', 'email@example.com')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/alunos')
-        .send(makeStudentRouteBody())
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
       const student = await prisma.student.findFirst();
-      await request(app)
+      await requestApp
         .put('/api/alunos/' + student?.id)
-        .send({
-          nome: 'nome',
-          email: 'email@example.com',
-        })
+        .field('nome', 'nome atualizado')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(200);
     });
@@ -158,21 +169,29 @@ describe('Students Routes', () => {
 
   describe('DELETE /alunos/:id', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .delete('/api/alunos/' + 'id')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 200 on success', async () => {
-      await request(app)
-        .post('/api/alunos')
-        .send(makeStudentRouteBody())
-        .set('authorization', `Bearer ${adminToken}`);
+      await prisma.student.create({
+        data: {
+          matricula: 123,
+          nome: 'nome',
+          status: 'ATIVO',
+          serie: 'serie',
+          email: 'student@example.com',
+          nascimento: new Date('2000-01-01').toISOString(),
+          sexo: 'MASCULINO',
+          endereco: 'endereco',
+          emailResponsavel: 'emailResponsavel@example.com',
+        },
+      });
       const student = await prisma.student.findFirst();
-      await request(app)
+      await requestApp
         .delete('/api/alunos/' + student?.id)
-        .send()
         .set('authorization', `Bearer ${adminToken}`)
         .expect(200);
     });

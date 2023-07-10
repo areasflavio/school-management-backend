@@ -61,12 +61,14 @@ describe('Update Employee Controller', () => {
       body: {
         nome: 'nome',
         email: 'email@example.com',
+        avatar: null,
       },
     };
     await sut.handle(httpRequest);
     expect(updateEmployeeSpy).toHaveBeenCalledWith('id', {
       nome: 'nome',
       email: 'email@example.com',
+      avatar: null,
     });
   });
 

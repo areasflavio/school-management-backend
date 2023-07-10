@@ -8,6 +8,7 @@ export const expressAdapterRoute = (controller: Controller) => {
       body: req.body,
       params: req.params,
       accessToken: req.accessToken,
+      base64File: req.base64File,
     };
     const httpResponse = await controller.handle(httpRequest);
     res.status(httpResponse.statusCode).json(httpResponse.body);

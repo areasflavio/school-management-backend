@@ -48,6 +48,7 @@ export class CreateEmployeeController implements Controller {
         escolaridade,
         endereco,
       } = httpRequest.body;
+      const avatar = httpRequest.base64File ?? null;
       await this.createEmployee.execute({
         admissao,
         cargo,
@@ -57,11 +58,12 @@ export class CreateEmployeeController implements Controller {
         escolaridade,
         nascimento,
         nome,
-        registro,
+        registro: Number(registro),
         RG,
         sexo,
         status,
         vinculo,
+        avatar,
       });
       return created();
     } catch (err) {

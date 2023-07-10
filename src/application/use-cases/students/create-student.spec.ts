@@ -30,6 +30,7 @@ const makeHttpStudentBody = (): CreateStudentData => {
     nomePai: null,
     telefoneMae: null,
     telefonePai: null,
+    avatar: null,
   };
 };
 

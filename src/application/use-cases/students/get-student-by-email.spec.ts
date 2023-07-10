@@ -30,6 +30,7 @@ const makeStudents = async (studentRepository: InMemoryStudentRepository) => {
       nomePai: null,
       telefoneMae: null,
       telefonePai: null,
+      avatar: null,
     },
     'id1'
   );
@@ -72,6 +73,7 @@ describe('Get student by email use case', () => {
           nomePai: null,
           telefoneMae: null,
           telefonePai: null,
+          avatar: null,
         },
       })
     );

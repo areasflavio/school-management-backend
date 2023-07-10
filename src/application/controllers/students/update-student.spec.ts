@@ -67,6 +67,7 @@ describe('Update Student Controller', () => {
     expect(updateStudentSpy).toHaveBeenCalledWith('id', {
       nome: 'nome',
       email: 'email@example.com',
+      avatar: null,
     });
   });
 

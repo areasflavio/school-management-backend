@@ -1,6 +1,7 @@
 import { type Router } from 'express';
 
 import { expressAdapterRoute } from '@main/adapter/express-route';
+import { MulterUploadFileAdapter } from '@main/adapter/multer-uploadFile';
 import {
   makeCreateEmployeeController,
   makeDeleteEmployeeController,
@@ -8,12 +9,16 @@ import {
   makeGetEmployeesController,
   makeUpdateEmployeeController,
 } from '@main/factories/employee';
-import { is } from '@main/middlewares';
+import { fileImage, is } from '@main/middlewares';
+
+const multer = new MulterUploadFileAdapter();
 
 export default (router: Router): void => {
   router.post(
     '/funcionarios',
     is(['ADMIN']),
+    multer.single('file'),
+    fileImage(),
     expressAdapterRoute(makeCreateEmployeeController())
   );
   router.get(
@@ -29,6 +34,8 @@ export default (router: Router): void => {
   router.put(
     '/funcionarios/:id',
     is(['ADMIN']),
+    multer.single('file'),
+    fileImage(),
     expressAdapterRoute(makeUpdateEmployeeController())
   );
   router.delete(

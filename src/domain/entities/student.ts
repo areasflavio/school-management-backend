@@ -16,6 +16,7 @@ export interface IStudent {
   telefonePai: string | null;
   nomeMae: string | null;
   telefoneMae: string | null;
+  avatar: string | null;
 }
 
 export class Student extends Entity<IStudent> {

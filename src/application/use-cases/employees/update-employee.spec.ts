@@ -30,6 +30,7 @@ const makeEmployees = async (
       registro: 123,
       RG: 'rg',
       vinculo: 'CONCURSADO',
+      avatar: null,
     },
     'id1'
   );
@@ -48,6 +49,7 @@ const makeEmployees = async (
       registro: 123,
       RG: 'rg',
       vinculo: 'CONCURSADO',
+      avatar: null,
     },
     'id2'
   );
@@ -66,6 +68,7 @@ const makeEmployees = async (
       registro: 123,
       RG: 'rg',
       vinculo: 'CONCURSADO',
+      avatar: null,
     },
     'id3'
   );
@@ -116,6 +119,7 @@ describe('Update employee use case', () => {
             registro: 123,
             RG: 'rg',
             vinculo: 'CONCURSADO',
+            avatar: null,
           },
         }),
       ])
@@ -146,6 +150,7 @@ describe('Update employee use case', () => {
             registro: 123,
             RG: 'rg',
             vinculo: 'CONCURSADO',
+            avatar: null,
           },
         }),
       ])

@@ -46,13 +46,14 @@ export class CreateStudentController implements Controller {
         telefoneMae,
         telefonePai,
       } = httpRequest.body;
+      const avatar = httpRequest.base64File ?? null;
       await this.createStudent.execute({
         email,
         nome,
         CPF,
         emailResponsavel,
         endereco,
-        matricula,
+        matricula: Number(matricula),
         nascimento,
         nomeMae,
         nomePai,
@@ -62,6 +63,7 @@ export class CreateStudentController implements Controller {
         status,
         telefoneMae,
         telefonePai,
+        avatar,
       });
       return created();
     } catch (err) {

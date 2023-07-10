@@ -21,6 +21,7 @@ export class DbCreateEmployee implements CreateEmployee {
     sexo,
     status,
     vinculo,
+    avatar,
   }: CreateEmployeeData): Promise<void> {
     const isEmailAlreadyRegistered = await this.employeeRepository.getByEmail(
       email
@@ -42,6 +43,7 @@ export class DbCreateEmployee implements CreateEmployee {
       sexo,
       status,
       vinculo,
+      avatar,
     });
   }
 }

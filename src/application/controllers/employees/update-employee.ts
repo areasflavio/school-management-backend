@@ -10,7 +10,11 @@ export class UpdateEmployeeController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { id } = httpRequest.params;
-      const data = httpRequest.body;
+      const avatar = httpRequest.base64File ?? null;
+      const data = {
+        ...httpRequest.body,
+        avatar,
+      };
       if (!id) {
         return badRequest(new MissingParamError('id'));
       }

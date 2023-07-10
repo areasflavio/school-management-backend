@@ -23,6 +23,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
       sexo,
       status,
       vinculo,
+      avatar,
     } = data;
     await prisma.employee.create({
       data: {
@@ -39,6 +40,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
         status,
         vinculo,
         registro,
+        avatar,
       },
     });
   }
@@ -86,6 +88,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
       sexo,
       status,
       vinculo,
+      avatar,
     } = data;
     await prisma.employee.update({
       where: { id },
@@ -103,6 +106,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
         sexo,
         status,
         vinculo,
+        avatar,
       },
     });
   }

@@ -30,6 +30,7 @@ const makeEmployees = async (
       registro: 123,
       RG: 'rg',
       vinculo: 'CONCURSADO',
+      avatar: null,
     },
     'id1'
   );
@@ -70,6 +71,7 @@ describe('Get employee by email use case', () => {
           registro: 123,
           RG: 'rg',
           vinculo: 'CONCURSADO',
+          avatar: null,
         },
       })
     );

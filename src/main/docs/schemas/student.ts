@@ -1,80 +1,108 @@
+export const studentData = {
+  matricula: {
+    description: 'Matricula do aluno',
+    type: 'number',
+    example: 123,
+  },
+  nome: {
+    description: 'Nome do aluno',
+    type: 'string',
+    example: 'João da Silva',
+  },
+  status: {
+    description: 'Status do aluno',
+    type: 'string',
+    enum: ['ATIVO', 'INATIVO'],
+    example: 'ATIVO',
+  },
+  serie: {
+    description: 'Série do aluno',
+    type: 'string',
+    example: '1o ano',
+  },
+  email: {
+    description: 'Email do aluno',
+    type: 'string',
+    example: 'joaozinho@example.com',
+  },
+  RG: {
+    description: 'RG do aluno',
+    type: 'string',
+    nullable: true,
+    example: 'BR12345678',
+  },
+  CPF: {
+    description: 'CPF do aluno',
+    type: 'string',
+    nullable: true,
+    example: '123456789',
+  },
+  nascimento: {
+    description: 'Data de nascimento do aluno',
+    type: 'string',
+    format: 'date',
+    example: '2000-01-01T00:00:00.00Z',
+  },
+  sexo: {
+    description: 'Sexo do aluno',
+    type: 'string',
+    enum: ['MASCULINO', 'FEMININO', 'NAODEFINIDO'],
+    example: 'MASCULINO',
+  },
+  endereco: {
+    description: 'Endereço do aluno',
+    type: 'string',
+    example: 'Rua Nova',
+  },
+  emailResponsavel: {
+    description: 'Email do responsável',
+    type: 'string',
+    example: 'joao@example.com',
+  },
+  nomePai: {
+    description: 'Nome do pai',
+    type: 'string',
+    nullable: true,
+    example: 'João da Silva',
+  },
+  telefonePai: {
+    description: 'Telefone do pai',
+    type: 'string',
+    nullable: true,
+    example: '1234567890',
+  },
+  nomeMae: {
+    description: 'Nome da mae',
+    type: 'string',
+    nullable: true,
+    example: 'Maria da Silva',
+  },
+  telefoneMae: {
+    description: 'Telefone da mae',
+    type: 'string',
+    nullable: true,
+    example: '1234567890',
+  },
+  file: {
+    description: 'Avatar do aluno',
+    type: 'string',
+    format: 'base64',
+  },
+};
+
 export const student = {
   type: 'object',
   properties: {
-    id: {
+    _id: {
+      description: 'Id do aluno',
       type: 'string',
+      format: 'uuid',
     },
-    matricula: {
-      type: 'string',
-    },
-    nome: {
-      type: 'string',
-    },
-    status: {
-      type: 'string',
-      enum: ['ATIVO', 'INATIVO'],
-    },
-    serie: {
-      type: 'string',
-    },
-    email: {
-      type: 'string',
-    },
-    RG: {
-      type: 'string',
-      nullable: true,
-    },
-    CPF: {
-      type: 'string',
-      nullable: true,
-    },
-    nascimento: {
-      type: 'string',
-      format: 'date',
-    },
-    sexo: {
-      type: 'string',
-      enum: ['MASCULINO', 'FEMININO', 'NAODEFINIDO'],
-    },
-    endereco: {
-      type: 'string',
-    },
-    emailResponsavel: {
-      type: 'string',
-    },
-    nomePai: {
-      type: 'string',
-      nullable: true,
-    },
-    telefonePai: {
-      type: 'string',
-      nullable: true,
-    },
-    nomeMae: {
-      type: 'string',
-      nullable: true,
-    },
-    telefoneMae: {
-      type: 'string',
-      nullable: true,
+    props: {
+      description: 'Propriedades do aluno',
+      type: 'object',
+      ...studentData,
     },
   },
-  required: [
-    'id',
-    'matricula',
-    'nome',
-    'status',
-    'serie',
-    'email',
-    'RG',
-    'CPF',
-    'nascimento',
-    'sexo',
-    'endereco',
-    'emailResponsavel',
-    'nomePai',
-    'telefonePai',
-    'nomeMae',
-    'telefoneMae',
-  ],
+  required: [],
 };

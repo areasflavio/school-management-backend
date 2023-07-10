@@ -1,4 +1,4 @@
-import request from 'supertest';
+import path from 'path';
 import { afterAll, beforeAll, beforeEach, describe, test } from 'vitest';
 
 import { JWTTokenizerAdapter } from '@main/adapter/jwt-tokenizer';
@@ -6,39 +6,12 @@ import app from '@main/config/app';
 import env from '@main/config/env';
 import prisma from '@main/config/prisma';
 
-const makeEmployeeRouteBody = (ignoredAttr?: string) => {
-  const fakeEmployee: any = {
-    nome: 'nome',
-    status: 'ATIVO',
-    email: 'email@example.com',
-    nascimento: new Date('2000-01-01'),
-    sexo: 'MASCULINO',
-    endereco: 'endereco',
-    admissao: new Date('2023-01-01'),
-    cargo: 'PROFESSOR',
-    CPF: 'cpf',
-    escolaridade: 'DOUTORADO',
-    registro: 123,
-    RG: 'rg',
-    vinculo: 'CONCURSADO',
-  };
+const filePath = path.resolve(__dirname, '..', '..', '__tests__');
 
-  const filteredKeys = Object.keys(fakeEmployee).filter(
-    (key) => !ignoredAttr || key !== ignoredAttr
-  );
-
-  return Object.assign(
-    {},
-    filteredKeys.reduce((acc: any, key) => {
-      acc[key] = fakeEmployee[key];
-      return acc;
-    }, {})
-  );
-};
-
-describe('Employees Routes', () => {
+describe('Employees Routes', async () => {
   let userToken = '';
   let adminToken = '';
+  let requestApp = (await import('supertest')).default(app);
 
   beforeAll(async () => {
     await prisma.$connect();
@@ -64,6 +37,7 @@ describe('Employees Routes', () => {
 
   beforeEach(async () => {
     await prisma.employee.deleteMany();
+    requestApp = (await import('supertest')).default(app);
   });
 
   afterAll(async () => {
@@ -74,29 +48,67 @@ describe('Employees Routes', () => {
 
   describe('POST /funcionarios', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody('email'))
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 400 on failure for existing email', async () => {
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .field('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .field('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 201 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`)
         .expect(201);
     });
@@ -104,7 +116,7 @@ describe('Employees Routes', () => {
 
   describe('GET /funcionarios', () => {
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .get('/api/funcionarios')
         .set('authorization', `Bearer ${userToken}`)
         .expect(200);
@@ -113,12 +125,25 @@ describe('Employees Routes', () => {
 
   describe('GET /funcionarios/:id', () => {
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
       const employee = await prisma.employee.findFirst();
-      await request(app)
+      await requestApp
         .get('/api/funcionarios/' + employee?.id)
         .set('authorization', `Bearer ${userToken}`)
         .expect(200);
@@ -127,28 +152,36 @@ describe('Employees Routes', () => {
 
   describe('PUT /funcionarios/:id', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .put('/api/funcionarios/' + 'id')
-        .send({
-          nome: 'nome',
-          email: 'email@example.com',
-        })
+        .field('nome', 'nome')
+        .field('email', 'email@example.com')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 200 on success', async () => {
-      await request(app)
+      await requestApp
         .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .attach('file', `${filePath}/file.png`)
         .set('authorization', `Bearer ${adminToken}`);
       const employee = await prisma.employee.findFirst();
-      await request(app)
+      await requestApp
         .put('/api/funcionarios/' + employee?.id)
-        .send({
-          nome: 'nome',
-          email: 'email@example.com',
-        })
+        .field('nome', 'nome atualizado')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(200);
     });
@@ -156,19 +189,32 @@ describe('Employees Routes', () => {
 
   describe('DELETE /funcionarios/:id', () => {
     test('should return 400 on failure', async () => {
-      await request(app)
+      await requestApp
         .delete('/api/funcionarios/' + 'id')
         .set('authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
 
     test('should return 200 on success', async () => {
-      await request(app)
-        .post('/api/funcionarios')
-        .send(makeEmployeeRouteBody())
-        .set('authorization', `Bearer ${adminToken}`);
+      await prisma.employee.create({
+        data: {
+          nome: 'nome',
+          status: 'ATIVO',
+          email: 'email@example.com',
+          nascimento: new Date('2000-01-01'),
+          sexo: 'MASCULINO',
+          endereco: 'endereco',
+          admissao: new Date('2023-01-01'),
+          cargo: 'PROFESSOR',
+          CPF: 'cpf',
+          escolaridade: 'DOUTORADO',
+          registro: 123,
+          RG: 'rg',
+          vinculo: 'CONCURSADO',
+        },
+      });
       const employee = await prisma.employee.findFirst();
-      await request(app)
+      await requestApp
         .delete('/api/funcionarios/' + employee?.id)
         .send()
         .set('authorization', `Bearer ${adminToken}`)

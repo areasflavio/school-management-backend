@@ -51,6 +51,7 @@ const makeHttpEmployeeBody = (ignoredAttr?: keyof CreateEmployeeData) => {
     registro: 123,
     RG: 'rg',
     vinculo: 'CONCURSADO',
+    avatar: null,
   };
 
   const filteredKeys = Object.keys(fakeEmployee).filter(

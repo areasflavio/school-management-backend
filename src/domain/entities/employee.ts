@@ -14,6 +14,7 @@ export interface IEmployee {
   sexo: 'MASCULINO' | 'FEMININO' | 'NAODEFINIDO';
   escolaridade: 'GRADUACAO' | 'POSGRADUACAO' | 'MESTRADO' | 'DOUTORADO';
   endereco: string;
+  avatar: string | null;
 }
 
 export class Employee extends Entity<IEmployee> {

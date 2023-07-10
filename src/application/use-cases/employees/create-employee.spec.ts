@@ -28,6 +28,7 @@ const makeHttpEmployeeBody = (): CreateEmployeeData => {
     registro: 123,
     RG: 'rg',
     vinculo: 'CONCURSADO',
+    avatar: null,
   };
 };
 

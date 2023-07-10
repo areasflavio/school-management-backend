@@ -30,6 +30,7 @@ const makeStudents = async (studentRepository: InMemoryStudentRepository) => {
       nomePai: null,
       telefoneMae: null,
       telefonePai: null,
+      avatar: null,
     },
     'id1'
   );
@@ -50,6 +51,7 @@ const makeStudents = async (studentRepository: InMemoryStudentRepository) => {
       nomePai: null,
       telefoneMae: null,
       telefonePai: null,
+      avatar: null,
     },
     'id2'
   );
@@ -70,6 +72,7 @@ const makeStudents = async (studentRepository: InMemoryStudentRepository) => {
       nomePai: null,
       telefoneMae: null,
       telefonePai: null,
+      avatar: null,
     },
     'id3'
   );
