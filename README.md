@@ -1,26 +1,62 @@
-# Backend
+# School-Management-Backend
 
-- Linguagem: Typescript
-- Framework: Express.js
-- ORM: Prisma
-- Database: PostgreSQL
-- Testes: Vitest
+<p align="center">
+  <img alt="logo" src=".github/logo.png" width="25%">
+</p>
 
-## Features
+<h2 align="center">
+  Este é o servidor de um app de gestão escolar desenvolvido em Node JS, Express, Prisma e PostgreSQL.
+</h2>
 
-- [x] CRUD completo para alunos
-- [x] CRUD completo para funcionários
-- [x] Autenticação com JWT
-- [x] Rotas protegidas
-- [x] Controle de acesso
-- [ ] Documentação
-- [ ] Cobertura de testes
+<p align="center">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/paulojr-eco/COM222-Backend.svg">
 
-## Frontend
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/paulojr-eco/COM222-Backend.svg">
 
-[Repositório](https://github.com/paulojr-eco/COM222-Frontend)
+  <a href="https://github.com/paulojr-eco/COM222-Backend/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/paulojr-eco/COM222-Backend.svg">
+  </a>
+</p>
 
-[Figma](https://www.figma.com/file/kTLssDnNd3bfVetOcLuadz/Project-COM222?type=design&node-id=0-1&t=ZqsHUjzJ6ePt8mLe-0)
+<p align="center">
+  <a href="#star-features">Features</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#computer-API-Reference">API</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#keyboard-technologies">Tecnologias</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#computer_mouse-installation">Instalação</a>
+</p>
+
+# :star: Features
+
+[(Back to top)](#School-Management-Backend)
+
+Esta é uma API de servidor para um aplicativo de gerenciamento escolar.
+Você pode gerenciar os dados para alunos e funcionários das escolas.
+
+Algumas características principais são:
+
+- CRUD para alunos
+- CRUD para funcionários
+- Criação de conta de usuário.
+- Rotas protegidas.
+- Controle de acesso usando roles.
+- A senha é criptografada com o pacote Bcrypt.
+- Rotas autenticadas usando JWT Token.
+- Upload de arquivo com Multer.
+- Codebase é coberto por testes com Vitest e Supertest.
+- Documentação completa com Swagger.
+
+O aplicativo é construído usando Node.JS com framework Express. O banco de dados é
+o PostgreSQL conectado pelo Prisma. Toda a base de código é escrita usando Typescript.
+
+<p align="center">
+  O repositório de frontend pode ser acessado em: <a href="https://github.com/paulojr-eco/COM222-Frontend">Frontend</a>
+</p>
+
+<br/>
+
+# :computer: API-Reference
+
+[(Back to top)](#School-Management-Backend)
 
 ## Roles
 
@@ -101,6 +137,7 @@
 | `nomeMae`          | `string`         | Nome da mãe do aluno                           |
 | `telefoneMae`      | `string`         | Telefone da mãe do aluno                       |
 | `emailResponsavel` | `string`         | **Required**. Email do responsável pelo aluno  |
+| `file`             | `file`           | **Required**. Avatar do aluno                  |
 
 ### Editar um aluno
 
@@ -129,6 +166,7 @@
 | `nomeMae`          | `string`         | Nome da mãe do aluno             |
 | `telefoneMae`      | `string`         | Telefone da mãe do aluno         |
 | `emailResponsavel` | `string`         | Email do responsável pelo aluno  |
+| `file`             | `file`           | Avatar do aluno                  |
 
 ### Deletar um aluno
 
@@ -183,6 +221,7 @@
 | `sexo`         | `M, F , ND`                                     | **Required**. Sexo de Funcionário                  |
 | `escolaridade` | `Graduação, Pós-graduação, Mestrado, Doutorado` | **Required**. Nível de escolaridade do funcionário |
 | `endereço`     | `string`                                        | **Required**. Data de nascimento do funcionário    |
+| `file`         | `file`                                          | **Required**. Avatar do funcionário                |
 
 ### Editar um funcionário
 
@@ -194,21 +233,22 @@
 | :-------- | :------- | :------------------------------ |
 | `id`      | `string` | **Required**. Id do funcionário |
 
-| Body           | Type                                            | Description                                        |
-| :------------- | :---------------------------------------------- | :------------------------------------------------- |
-| `registro`     | `string`                                        | **Required**. Registro do funcionário              |
-| `nome`         | `string`                                        | **Required**. Nome do funcionário                  |
-| `email`        | `string`                                        | **Required**. Email do funcionário                 |
-| `status`       | `ativo, inativo`                                | **Required**. Status do funcionário                |
-| `vinculo`      | `Contratado, Concursado,  Substituto`           | **Required**. Vínculo empregatício do funcionário  |
-| `admissao`     | `date`                                          | **Required**. Date de admissão de Funcionário      |
-| `cargo`        | `Direção, Coordenação, Secretaria, Professor`   | **Required**. Cargo empregatício do funcionário    |
-| `RG`           | `string`                                        | **Required**. Documento RG do funcionário          |
-| `CPF`          | `string`                                        | **Required**. Documento CPF do funcionário         |
-| `nascimento`   | `date`                                          | **Required**. Data de nascimento do funcionário    |
-| `sexo`         | `M, F , ND`                                     | **Required**. Sexo de Funcionário                  |
-| `escolaridade` | `Graduação, Pós-graduação, Mestrado, Doutorado` | **Required**. Nível de escolaridade do funcionário |
-| `endereço`     | `string`                                        | **Required**. Data de nascimento do funcionário    |
+| Body           | Type                                            | Description                          |
+| :------------- | :---------------------------------------------- | :----------------------------------- |
+| `registro`     | `string`                                        | Registro do funcionário              |
+| `nome`         | `string`                                        | Nome do funcionário                  |
+| `email`        | `string`                                        | Email do funcionário                 |
+| `status`       | `ativo, inativo`                                | Status do funcionário                |
+| `vinculo`      | `Contratado, Concursado,  Substituto`           | Vínculo empregatício do funcionário  |
+| `admissao`     | `date`                                          | Date de admissão de Funcionário      |
+| `cargo`        | `Direção, Coordenação, Secretaria, Professor`   | Cargo empregatício do funcionário    |
+| `RG`           | `string`                                        | Documento RG do funcionário          |
+| `CPF`          | `string`                                        | Documento CPF do funcionário         |
+| `nascimento`   | `date`                                          | Data de nascimento do funcionário    |
+| `sexo`         | `M, F , ND`                                     | Sexo de Funcionário                  |
+| `escolaridade` | `Graduação, Pós-graduação, Mestrado, Doutorado` | Nível de escolaridade do funcionário |
+| `endereço`     | `string`                                        | Data de nascimento do funcionário    |
+| `file`         | `file`                                          | Avatar do funcionário                |
 
 ### Deletar um funcionário
 
@@ -221,3 +261,58 @@
 | `id`      | `string` | **Required**. Id do funcionário |
 
 <br/>
+
+# :keyboard: Technologies
+
+[(Back to top)](#School-Management-Backend)
+
+Isto é o que foi usado e aprendemos com este projeto:
+
+- [x] Node.JS
+- [x] Express
+- [x] Prisma
+- [x] PostgreSQL
+- [x] Bcrypt
+- [x] JsonWebToken
+- [x] Multer
+- [x] Eslint
+- [x] Husky
+- [x] LintStaged
+- [x] Vitest
+- [x] Supertest
+- [x] Swagger
+- [x] Typescript
+
+<br/>
+
+# :computer_mouse: Installation
+
+[(Back to top)](#School-Management-Backend)
+
+Para usar este projeto, primeiro você precisa de NodeJS e PostgreSQL rodando em sua máquina,
+então você pode seguir os comandos abaixo:
+
+```bash
+# Clonar o repositório
+git clone https://github.com/paulojr-eco/COM222-Backend.git
+
+# Entrar na pasta
+cd COM222-Backend
+
+# Instalar dependências para o backend
+npm install
+
+# Copie o .env.example para o arquivo .env e injete suas credenciais
+cp .env.example .env
+
+# Para rodar os testes copie o .env.test.example para o arquivo .env.test e injete suas credenciais
+cp .env.test.example .env.test
+
+# Certifique-se de ter um banco de dados adequado criado
+
+# Execute as migrations dos banco de dados
+npm run migrate:dev && npm run migrate:test
+
+# Para iniciar o servidor http de desenvolvimento, execute o seguinte comando
+npm run start:dev
+```
