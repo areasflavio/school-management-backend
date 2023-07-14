@@ -14,7 +14,7 @@ export const fileImage = () => {
       }
 
       res.statusCode = 400;
-      res.json({ error: 'File not found' });
+      res.json({ error: 'Image file not found.' });
       return;
     }
 

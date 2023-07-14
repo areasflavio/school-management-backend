@@ -35,7 +35,7 @@ describe('File Image Middleware', () => {
     await request(app)
       .post('/test_file_image')
       .attach('file', `${filePath}/file.txt`)
-      .expect(500);
+      .expect(400);
   });
 
   it('should populate request base64File on success', async () => {
