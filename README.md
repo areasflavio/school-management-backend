@@ -9,12 +9,12 @@
 </h2>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/paulojr-eco/COM222-Backend.svg">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/areasflavio/school-management-backend.svg">
 
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/paulojr-eco/COM222-Backend.svg">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/areasflavio/school-management-backend.svg">
 
-  <a href="https://github.com/paulojr-eco/COM222-Backend/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/paulojr-eco/COM222-Backend.svg">
+  <a href="https://github.com/areasflavio/school-management-backend/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/areasflavio/school-management-backend.svg">
   </a>
 </p>
 
@@ -294,7 +294,7 @@ então você pode seguir os comandos abaixo:
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/paulojr-eco/COM222-Backend.git
+git clone https://github.com/areasflavio/school-management-backend.git
 
 # Entrar na pasta
 cd COM222-Backend
