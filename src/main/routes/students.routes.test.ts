@@ -134,6 +134,29 @@ describe('Students Routes', async () => {
     });
   });
 
+  describe('GET /alunos/email/:email', () => {
+    test('should return 200 on success', async () => {
+      await requestApp
+        .post('/api/alunos')
+        .field('matricula', 123)
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('serie', 'serie')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('emailResponsavel', 'emailResponsavel@example.com')
+        .attach('file', `${filePath}/file.png`)
+        .set('authorization', `Bearer ${adminToken}`);
+      const student = await prisma.student.findFirst();
+      await requestApp
+        .get('/api/alunos/email/' + student?.email)
+        .set('authorization', `Bearer ${userToken}`)
+        .expect(200);
+    });
+  });
+
   describe('PUT /alunos/:id', () => {
     test('should return 400 on failure', async () => {
       await requestApp

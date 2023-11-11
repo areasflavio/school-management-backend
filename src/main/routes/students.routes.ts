@@ -5,6 +5,7 @@ import { MulterUploadFileAdapter } from '@main/adapter/multer-uploadFile';
 import {
   makeCreateStudentController,
   makeDeleteStudentController,
+  makeGetStudentByEmailController,
   makeGetStudentByIdController,
   makeGetStudentsController,
   makeUpdateStudentController,
@@ -30,6 +31,11 @@ export default (router: Router): void => {
     '/alunos/:id',
     is(['ADMIN', 'USER']),
     expressAdapterRoute(makeGetStudentByIdController())
+  );
+  router.get(
+    '/alunos/email/:email',
+    is(['ADMIN', 'USER']),
+    expressAdapterRoute(makeGetStudentByEmailController())
   );
   router.put(
     '/alunos/:id',

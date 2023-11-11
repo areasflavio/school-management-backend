@@ -1,11 +1,13 @@
 import { CreateStudentController } from '@application/controllers/students/create-student';
 import { DeleteStudentController } from '@application/controllers/students/delete-student';
+import { GetStudentByEmailController } from '@application/controllers/students/get-student-by-email';
 import { GetStudentByIdController } from '@application/controllers/students/get-student-by-id';
 import { GetStudentsController } from '@application/controllers/students/get-students';
 import { UpdateStudentController } from '@application/controllers/students/update-student';
 import { PrismaStudentRepository } from '@application/repositories/prisma/student';
 import { DbCreateStudent } from '@application/use-cases/students/create-student';
 import { DbDeleteStudent } from '@application/use-cases/students/delete-student';
+import { DbGetStudentByEmail } from '@application/use-cases/students/get-student-by-email';
 import { DbGetStudentById } from '@application/use-cases/students/get-student-by-id';
 import { DbGetStudents } from '@application/use-cases/students/get-students';
 import { DbUpdateStudent } from '@application/use-cases/students/update-student';
@@ -27,6 +29,13 @@ export const makeGetStudentByIdController = (): GetStudentByIdController => {
   const getStudentById = new DbGetStudentById(prismaStudentRepository);
   return new GetStudentByIdController(getStudentById);
 };
+
+export const makeGetStudentByEmailController =
+  (): GetStudentByEmailController => {
+    const prismaStudentRepository = new PrismaStudentRepository();
+    const getStudentByEmail = new DbGetStudentByEmail(prismaStudentRepository);
+    return new GetStudentByEmailController(getStudentByEmail);
+  };
 
 export const makeUpdateStudentController = (): UpdateStudentController => {
   const prismaStudentRepository = new PrismaStudentRepository();
