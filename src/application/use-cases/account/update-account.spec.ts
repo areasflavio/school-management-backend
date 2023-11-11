@@ -21,6 +21,14 @@ const makeAccounts = async (accountRepository: InMemoryAccountRepository) => {
     },
     'id1'
   );
+  await accountRepository.create(
+    {
+      email: 'account2@example.com',
+      password: 'password',
+      role: 'USER',
+    },
+    'id2'
+  );
 };
 
 describe('Update account use case', () => {
