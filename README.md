@@ -48,10 +48,6 @@ Algumas características principais são:
 O aplicativo é construído usando Node.JS com framework Express. O banco de dados é
 o PostgreSQL conectado pelo Prisma. Toda a base de código é escrita usando Typescript.
 
-<p align="center">
-  O repositório de frontend pode ser acessado em: <a href="https://github.com/paulojr-eco/COM222-Frontend">Frontend</a>
-</p>
-
 <br/>
 
 # :computer: API-Reference
