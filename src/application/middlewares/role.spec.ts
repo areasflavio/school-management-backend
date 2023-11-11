@@ -92,6 +92,18 @@ describe('RoleMiddleware', () => {
     expect(httpResponse.body).toEqual(new UnauthorizedError());
   });
 
+  test('should return 401 if verified token is invalid', async () => {
+    const { sut, tokenizerStub } = makeSut();
+    vi.spyOn(tokenizerStub, 'verify').mockReturnValueOnce(
+      Promise.resolve(undefined)
+    );
+    const httpResponse = await sut.handle({
+      accessToken: 'token',
+    });
+    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.body).toEqual(new UnauthorizedError());
+  });
+
   test('should return 400 if an RoleMiddleware throws an Error instance', async () => {
     const { sut, tokenizerStub } = makeSut();
     vi.spyOn(tokenizerStub, 'verify').mockImplementationOnce(async () => {
