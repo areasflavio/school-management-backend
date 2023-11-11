@@ -24,7 +24,7 @@ const makeAccountRouteBody = (ignoredAttr?: string) => {
   );
 };
 
-describe('Accounts Routes', () => {
+describe('Auth Routes', () => {
   beforeAll(async () => {
     await prisma.$connect();
   });
