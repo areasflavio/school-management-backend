@@ -67,7 +67,7 @@ export class PrismaStudentRepository implements StudentRepository {
   }
 
   async getByEmail(email: string): Promise<Student | null> {
-    const prismaStudent = await prisma.student.findFirst({
+    const prismaStudent = await prisma.student.findUnique({
       where: { email },
     });
     if (!prismaStudent) {

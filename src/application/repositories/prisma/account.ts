@@ -36,7 +36,7 @@ export class PrismaAccountRepository implements AccountRepository {
   }
 
   async getByEmail(email: string): Promise<Account | null> {
-    const prismaAccount = await prisma.account.findFirst({
+    const prismaAccount = await prisma.account.findUnique({
       where: { email },
     });
     if (!prismaAccount) {
@@ -48,16 +48,13 @@ export class PrismaAccountRepository implements AccountRepository {
 
   async update(id: string, data: UpdateAccountData): Promise<void> {
     const { password, role } = data;
-    const account = await prisma.account.findUnique({
+    const account = await prisma.account.findUniqueOrThrow({
       where: { id },
     });
-    if (!account) {
-      return;
-    }
-    await prisma.account.update({
+    await prisma.account.updateMany({
       where: { id },
       data: {
-        password,
+        password: password,
         role: role ?? account.role,
       },
     });
