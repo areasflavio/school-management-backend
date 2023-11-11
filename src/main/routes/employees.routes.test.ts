@@ -150,6 +150,33 @@ describe('Employees Routes', async () => {
     });
   });
 
+  describe('GET /funcionarios/email/:email', () => {
+    test('should return 200 on success', async () => {
+      await requestApp
+        .post('/api/funcionarios')
+        .field('nome', 'nome')
+        .field('status', 'ATIVO')
+        .field('email', 'email@example.com')
+        .field('nascimento', new Date('2000-01-01').toISOString())
+        .field('sexo', 'MASCULINO')
+        .field('endereco', 'endereco')
+        .field('admissao', new Date('2023-01-01').toISOString())
+        .field('cargo', 'PROFESSOR')
+        .field('CPF', 'cpf')
+        .field('escolaridade', 'DOUTORADO')
+        .field('registro', 123)
+        .field('RG', 'rg')
+        .field('vinculo', 'CONCURSADO')
+        .attach('file', `${filePath}/file.png`)
+        .set('authorization', `Bearer ${adminToken}`);
+      const employee = await prisma.employee.findFirst();
+      await requestApp
+        .get('/api/funcionarios/email/' + employee?.email)
+        .set('authorization', `Bearer ${userToken}`)
+        .expect(200);
+    });
+  });
+
   describe('PUT /funcionarios/:id', () => {
     test('should return 400 on failure', async () => {
       await requestApp
