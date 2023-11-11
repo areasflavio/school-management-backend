@@ -25,7 +25,7 @@ export class RoleMiddleware implements Middleware {
         const account = await this.accountRepository.getById(id);
         if (account?.id) {
           const { role } = account.props;
-          if (this.roles.includes(role)) return ok();
+          if (this.roles.includes(role!)) return ok();
         }
       }
       return unauthorized(new UnauthorizedError());
