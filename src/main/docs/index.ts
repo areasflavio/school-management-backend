@@ -14,14 +14,10 @@ export default {
       email: '',
       url: '',
     },
-    license: {
-      name: 'MIT License',
-      url: 'https://github.com/paulojr-eco/COM222-Backend/blob/main/LICENSE',
-    },
   },
   externalDocs: {
-    description: 'Link para o repositório do projeto frontend',
-    url: 'https://github.com/paulojr-eco/COM222-Frontend',
+    description: 'Link para o repositório do projeto',
+    url: 'https://github.com/areasflavio/school-management-backend',
   },
   servers: [
     {
@@ -41,6 +37,10 @@ export default {
     {
       name: 'Funcionários',
       description: 'APIs relacionadas a Funcionários',
+    },
+    {
+      name: 'Usuários',
+      description: 'APIs relacionadas a Usuários',
     },
   ],
   paths,

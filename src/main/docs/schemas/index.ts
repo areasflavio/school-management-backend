@@ -1,4 +1,5 @@
 import { account } from './account';
+import { createAccountParams, updateAccountParams } from './account-params';
 import { employee } from './employee';
 import { createEmployeeParams, updateEmployeeParams } from './employee-params';
 import { error } from './error';
@@ -10,6 +11,8 @@ import { createStudentParams, updateStudentParams } from './student-params';
 
 export default {
   account,
+  createAccountParams,
+  updateAccountParams,
   error,
   session,
   signInParams,

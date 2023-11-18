@@ -1,15 +1,50 @@
+export const accountData = {
+  email: {
+    description: 'Email do usuário',
+    type: 'string',
+    example: 'joao@example.com',
+  },
+  password: {
+    description: 'Senha do usuário',
+    type: 'string',
+    example: '123456',
+  },
+  role: {
+    description: 'Permissão do usuário',
+    type: 'string',
+    enum: ['ADMIN', 'USER'],
+    example: 'ADMIN',
+  },
+};
+
+const accountDataDisplay = {
+  email: {
+    description: 'Email do usuário',
+    type: 'string',
+    example: 'joao@example.com',
+  },
+  role: {
+    description: 'Permissão do usuário',
+    type: 'string',
+    enum: ['ADMIN', 'USER'],
+    example: 'ADMIN',
+  },
+};
+
 export const account = {
   type: 'object',
   properties: {
-    email: {
-      description: 'Email do usuário',
+    _id: {
+      description: 'Id do usuário',
       type: 'string',
-      example: 'joao@example.com',
+      format: 'uuid',
     },
-    password: {
-      description: 'Senha do usuário',
-      type: 'string',
-      example: '123456',
+    props: {
+      description: 'Propriedades do usuário',
+      type: 'object',
+      properties: {
+        ...accountDataDisplay,
+      },
     },
   },
   required: [],
