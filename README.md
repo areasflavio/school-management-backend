@@ -36,6 +36,7 @@ Algumas características principais são:
 
 - CRUD para alunos
 - CRUD para funcionários
+- CRUD para usuários
 - Criação de conta de usuário.
 - Rotas protegidas.
 - Controle de acesso usando roles.
@@ -89,6 +90,67 @@ o PostgreSQL conectado pelo Prisma. Toda a base de código é escrita usando Typ
 <br/>
 
 > As rotas abaixo são autenticadas
+
+## Usuários
+
+### Listas todos os usuários
+
+```http
+  GET /api/usuarios
+```
+
+### Detalhes de um usuário
+
+```http
+  GET /api/usuarios/:id
+```
+
+| Parameter | Type     | Description                 |
+| :-------- | :------- | :-------------------------- |
+| `id`      | `string` | **Required**. Id do usuário |
+
+> As rotas permitidas somente para admin
+
+### Criar um usuário
+
+```http
+  POST /api/usuarios
+```
+
+| Body                   | Type          | Description                    |
+| :--------------------- | :------------ | :----------------------------- |
+| `email`                | `string`      | **Required**. Email do usuário |
+| `password`             | `string`      | **Required**. Senha do usuário |
+| `passwordConfirmation` | `string`      | **Required**. Senha do usuário |
+| `role`                 | `admin, user` | Permissão do usuário           |
+
+### Editar um usuário
+
+```http
+  PUT /api/usuarios/:id
+```
+
+| Parameter | Type     | Description                 |
+| :-------- | :------- | :-------------------------- |
+| `id`      | `string` | **Required**. Id do usuário |
+
+| Body       | Type          | Description          |
+| :--------- | :------------ | :------------------- |
+| `email`    | `string`      | Email do usuário     |
+| `password` | `string`      | Senha do usuário     |
+| `role`     | `admin, user` | Permissão do usuário |
+
+### Deletar um usuário
+
+```http
+  DELETE /api/usuarios/:id
+```
+
+| Parameter | Type     | Description                 |
+| :-------- | :------- | :-------------------------- |
+| `id`      | `string` | **Required**. Id do usuario |
+
+<br/>
 
 ## Alunos
 
@@ -293,7 +355,7 @@ então você pode seguir os comandos abaixo:
 git clone https://github.com/areasflavio/school-management-backend.git
 
 # Entrar na pasta
-cd COM222-Backend
+cd school-management-backend
 
 # Instalar dependências para o backend
 npm install
